@@ -1,0 +1,40 @@
+.card {
+  border: 1px solid black;
+  width: 25vw;
+  height: 20vh;
+  display: flex;
+  flex-direction: column;
+}
+
+.image {
+  border: 1px solid black;
+  width: 100%;
+  height: 80%;
+}
+
+.name {
+  margin-top: auto;
+  margin-bottom: auto;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+@media (min-width: 1024px) {
+  .card {
+    width: 15vw;
+    height: 40vh;
+  }
+}
+
+@media (min-width: 700px) and (max-width: 1000px) {
+  .card {
+    height: 25vh;
+  }
+}
+
+@media (max-width: 375px) {
+  .card {
+    height: 20vh;
+  }
+}

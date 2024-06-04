@@ -1,0 +1,9 @@
+.scoreboard {
+  padding: 0;
+  display: flex;
+  margin-left: auto;
+}
+
+.scoreboard p {
+  margin-top: 0;
+}
