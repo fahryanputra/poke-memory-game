@@ -1,9 +1,9 @@
 import "styles/Card.css";
 
-function Card({ image }) {
+function Card({ image, onClick }) {
   return (
     <>
-      <div className="card">
+      <div className="card" onClick={onClick}>
         <div className="image">
           <h1>{image}</h1>
         </div>
