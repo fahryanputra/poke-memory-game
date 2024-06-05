@@ -6,3 +6,11 @@ header {
   font-style: normal;
   background-color: lightblue;
 }
+
+@media (max-width: 280px) {
+  header {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+}

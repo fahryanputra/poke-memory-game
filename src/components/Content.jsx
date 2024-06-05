@@ -3,8 +3,43 @@ import Scoreboard from "components/Scoreboard";
 import Tutorial from "./Tutorial";
 import Card from "./Card";
 
+function chooseRandomInteger(number) {
+  return Math.floor(Math.random() * number);
+}
+
+function createPokemonArray(pokemonNumber) {
+  const result = [];
+
+  for (let i = 0; i < pokemonNumber; i++) {
+    result.push(i);
+  }
+
+  return result;
+}
+
+function chooseRandomPokemon(cardNumber, pokemon) {
+  const result = [];
+
+  let randomValue = chooseRandomInteger(pokemon.length);
+  const previousValue = [];
+
+  for (let i = 0; i < cardNumber; i++) {
+    while (previousValue.includes(randomValue)) {
+      randomValue = chooseRandomInteger(pokemon.length);
+    }
+
+    result.push(pokemon[randomValue]);
+    previousValue.push(randomValue);
+  }
+
+  return result;
+}
+
 function Content() {
-  const pokemon = Array(15).fill(0);
+  const pokemonNumber = 20;
+  const cardNumber = 12;
+  const pokemon = createPokemonArray(pokemonNumber);
+  const selected = chooseRandomPokemon(cardNumber, pokemon);
 
   return (
     <>
@@ -15,8 +50,8 @@ function Content() {
         </div>
         <div className="game-board">
           <div className="cards">
-            {pokemon.map((index) => (
-              <Card key={index} />
+            {selected.map((index) => (
+              <Card key={index} image={index} />
             ))}
           </div>
         </div>
