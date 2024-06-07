@@ -41,9 +41,16 @@ function Content() {
   const cardNumber = 12;
   const pokemon = createPokemonArray(pokemonNumber);
 
-  const [selectedPokemon, setSelectedPokemon] = useState(
+  const [chosenPokemon, setChosenPokemon] = useState([]);
+  const [displayedPokemon, setDisplayedPokemon] = useState(
     chooseRandomPokemon(cardNumber, pokemon)
   );
+
+  function handleClick(index) {
+    setChosenPokemon([...chosenPokemon, index]);
+    setDisplayedPokemon(chooseRandomPokemon(cardNumber, pokemon));
+    console.log(chosenPokemon);
+  }
 
   return (
     <>
@@ -54,14 +61,8 @@ function Content() {
         </div>
         <div className="game-board">
           <div className="cards">
-            {selectedPokemon.map((index) => (
-              <Card
-                key={index}
-                image={index}
-                onClick={() =>
-                  setSelectedPokemon(chooseRandomPokemon(cardNumber, pokemon))
-                }
-              />
+            {displayedPokemon.map((index) => (
+              <Card key={index} image={index} handleClick={handleClick} />
             ))}
           </div>
         </div>
