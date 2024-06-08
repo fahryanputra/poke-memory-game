@@ -6,10 +6,6 @@
   flex-direction: column;
 }
 
-.card.is-disabled {
-  pointer-events: none;
-}
-
 .image {
   border: 1px solid black;
   width: 100%;

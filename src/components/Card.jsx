@@ -1,12 +1,9 @@
 import "styles/Card.css";
 
-function Card({ image, handleClick, gameOver }) {
+function Card({ image, handleClick }) {
   return (
     <>
-      <div
-        className={`card ${gameOver ? "is-disabled" : ""}`}
-        onClick={() => handleClick(image)}
-      >
+      <div className="card" onClick={() => handleClick(image)}>
         <div className="image">
           <h1>{image}</h1>
         </div>

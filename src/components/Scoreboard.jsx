@@ -1,6 +1,6 @@
 import "styles/Scoreboard.css";
 
-function Scoreboard() {
+function Scoreboard({ score, highScore }) {
   return (
     <>
       <div className="scoreboard">
@@ -9,8 +9,8 @@ function Scoreboard() {
           <p>High Score</p>
         </div>
         <div className="right score-value">
-          <p> : 0</p>
-          <p> : 0</p>
+          <p className="score value"> : {score}</p>
+          <p className="highscore value"> : {highScore}</p>
         </div>
       </div>
     </>

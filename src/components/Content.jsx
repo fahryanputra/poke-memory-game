@@ -45,17 +45,21 @@ function Content() {
   const [displayedPokemon, setDisplayedPokemon] = useState(
     chooseRandomPokemon(cardNumber, pokemon)
   );
-  const [gameOver, setGameOver] = useState(false);
+  const [score, setScore] = useState(0);
+  const [highScore, setHighScore] = useState(0);
 
   function handleClick(index) {
     if (chosenPokemon.includes(index)) {
-      setGameOver(true);
-      console.log(gameOver);
+      if (score > highScore) {
+        setHighScore(score);
+      }
+      setScore(0);
+      setChosenPokemon([]);
       return;
     }
+    setScore(score + 1);
     setChosenPokemon([...chosenPokemon, index]);
     setDisplayedPokemon(chooseRandomPokemon(cardNumber, pokemon));
-    console.log(chosenPokemon);
   }
 
   return (
@@ -63,17 +67,12 @@ function Content() {
       <div className="content">
         <div className="game-info">
           <Tutorial />
-          <Scoreboard />
+          <Scoreboard score={score} highScore={highScore} />
         </div>
         <div className="game-board">
           <div className="cards">
             {displayedPokemon.map((index) => (
-              <Card
-                key={index}
-                image={index}
-                handleClick={handleClick}
-                gameOver={gameOver}
-              />
+              <Card key={index} image={index} handleClick={handleClick} />
             ))}
           </div>
         </div>
