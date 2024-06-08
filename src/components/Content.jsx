@@ -45,8 +45,14 @@ function Content() {
   const [displayedPokemon, setDisplayedPokemon] = useState(
     chooseRandomPokemon(cardNumber, pokemon)
   );
+  const [gameOver, setGameOver] = useState(false);
 
   function handleClick(index) {
+    if (chosenPokemon.includes(index)) {
+      setGameOver(true);
+      console.log(gameOver);
+      return;
+    }
     setChosenPokemon([...chosenPokemon, index]);
     setDisplayedPokemon(chooseRandomPokemon(cardNumber, pokemon));
     console.log(chosenPokemon);
@@ -62,7 +68,12 @@ function Content() {
         <div className="game-board">
           <div className="cards">
             {displayedPokemon.map((index) => (
-              <Card key={index} image={index} handleClick={handleClick} />
+              <Card
+                key={index}
+                image={index}
+                handleClick={handleClick}
+                gameOver={gameOver}
+              />
             ))}
           </div>
         </div>
