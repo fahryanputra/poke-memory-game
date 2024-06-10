@@ -1,8 +1,10 @@
-function Tutorial() {
+function Tutorial({ handleClick }) {
   return (
     <>
       <div className="tutorial">
-        <a href="#">How to play?</a>
+        <button type="button" className="button-tutorial" onClick={handleClick}>
+          How to play?
+        </button>
       </div>
     </>
   );
