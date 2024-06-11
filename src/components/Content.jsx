@@ -4,10 +4,8 @@ import Scoreboard from "components/Scoreboard";
 import Tutorial from "components/Tutorial";
 import Card from "components/Card";
 import Modal from "components/Modal";
-
-function chooseRandomInteger(number) {
-  return Math.floor(Math.random() * number);
-}
+import getRandomInteger from "utilities/getRandomInteger";
+import fetchPokemons from "utilities/fetchPokemons";
 
 function createPokemonArray(pokemonNumber) {
   const result = [];
@@ -22,12 +20,12 @@ function createPokemonArray(pokemonNumber) {
 function chooseRandomPokemon(cardNumber, pokemon) {
   const result = [];
 
-  let randomValue = chooseRandomInteger(pokemon.length);
+  let randomValue = getRandomInteger(pokemon.length);
   const previousValue = [];
 
   for (let i = 0; i < cardNumber; i++) {
     while (previousValue.includes(randomValue)) {
-      randomValue = chooseRandomInteger(pokemon.length);
+      randomValue = getRandomInteger(pokemon.length);
     }
 
     result.push(pokemon[randomValue]);
