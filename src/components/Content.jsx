@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import "styles/Content.css";
 import Scoreboard from "components/Scoreboard";
 import Tutorial from "components/Tutorial";
@@ -39,6 +39,14 @@ function Content() {
   const pokemonNumber = 20;
   const cardNumber = 12;
   const pokemon = createPokemonArray(pokemonNumber);
+
+  const [initialPokemon, setInitialPokemon] = useState([]);
+
+  useEffect(() => {
+    fetchPokemons(pokemonNumber).then((pokemons) =>
+      setInitialPokemon(pokemons)
+    );
+  }, []);
 
   const [chosenPokemon, setChosenPokemon] = useState([]);
   const [displayedPokemon, setDisplayedPokemon] = useState(
