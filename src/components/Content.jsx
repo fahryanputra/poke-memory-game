@@ -1,4 +1,5 @@
 import { useEffect, useState } from "react";
+import { v4 as uuidv4 } from "uuid";
 import "styles/Content.css";
 import Scoreboard from "components/Scoreboard";
 import Tutorial from "components/Tutorial";
@@ -7,29 +8,32 @@ import Modal from "components/Modal";
 import getRandomInteger from "utilities/getRandomInteger";
 import fetchPokemons from "utilities/fetchPokemons";
 
-function createPokemonArray(pokemonNumber) {
-  const result = [];
+// function createPokemonArray(pokemonNumber) {
+//   const result = [];
 
-  for (let i = 0; i < pokemonNumber; i++) {
-    result.push(i);
-  }
+//   for (let i = 0; i < pokemonNumber; i++) {
+//     result.push(i);
+//   }
 
-  return result;
-}
+//   return result;
+// }
 
 function chooseRandomPokemon(cardNumber, pokemon) {
   const result = [];
-
-  let randomValue = getRandomInteger(pokemon.length);
   const previousValue = [];
 
   for (let i = 0; i < cardNumber; i++) {
-    while (previousValue.includes(randomValue)) {
-      randomValue = getRandomInteger(pokemon.length);
-    }
+    let randomValue = 0;
 
-    result.push(pokemon[randomValue]);
-    previousValue.push(randomValue);
+    if (pokemon.length < 1) {
+      result.push("fetching data");
+    } else {
+      do {
+        randomValue = getRandomInteger(pokemon.length);
+      } while (previousValue.includes(randomValue));
+      result.push(pokemon[randomValue]);
+      previousValue.push(randomValue);
+    }
   }
 
   return result;
@@ -38,20 +42,18 @@ function chooseRandomPokemon(cardNumber, pokemon) {
 function Content() {
   const pokemonNumber = 20;
   const cardNumber = 12;
-  const pokemon = createPokemonArray(pokemonNumber);
 
-  const [initialPokemon, setInitialPokemon] = useState([]);
+  const [pokemonData, setPokemonData] = useState([]);
+  const [displayedPokemon, setDisplayedPokemon] = useState([]);
 
   useEffect(() => {
-    fetchPokemons(pokemonNumber).then((pokemons) =>
-      setInitialPokemon(pokemons)
-    );
+    fetchPokemons(pokemonNumber).then((data) => setPokemonData(data));
   }, []);
+  useEffect(() => {
+    setDisplayedPokemon(chooseRandomPokemon(cardNumber, pokemonData));
+  }, [pokemonData]);
 
   const [chosenPokemon, setChosenPokemon] = useState([]);
-  const [displayedPokemon, setDisplayedPokemon] = useState(
-    chooseRandomPokemon(cardNumber, pokemon)
-  );
   const [score, setScore] = useState(0);
   const [highScore, setHighScore] = useState(0);
   const [gameOver, setGameOver] = useState(false);
@@ -69,7 +71,7 @@ function Content() {
     }
     setScore(score + 1);
     setChosenPokemon([...chosenPokemon, index]);
-    setDisplayedPokemon(chooseRandomPokemon(cardNumber, pokemon));
+    setDisplayedPokemon(chooseRandomPokemon(cardNumber, pokemonData));
   }
 
   function handleOpenModal() {
@@ -82,7 +84,7 @@ function Content() {
 
   function handleCloseGameOverModal() {
     setOpenModal(false);
-    setDisplayedPokemon(chooseRandomPokemon(cardNumber, pokemon));
+    setDisplayedPokemon(chooseRandomPokemon(cardNumber, pokemonData));
     setGameOver(false);
   }
 
@@ -95,8 +97,14 @@ function Content() {
         </div>
         <div className="game-board">
           <div className="cards">
-            {displayedPokemon.map((index) => (
-              <Card key={index} image={index} handleClick={handlePlayRound} />
+            {displayedPokemon.map((data) => (
+              <Card
+                key={uuidv4()}
+                name={data.name ?? ""}
+                image={data.image ?? ""}
+                handleClick={handlePlayRound}
+                // isLoading={isLoading}
+              />
             ))}
           </div>
         </div>

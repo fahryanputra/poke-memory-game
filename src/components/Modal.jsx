@@ -4,7 +4,7 @@ function children(type) {
   if (type === "tutorial") {
     return (
       <>
-        <p>Choose card that you have not seen before!</p>
+        <p>Don{"'"}t click on the same card twice!</p>
       </>
     );
   } else {

@@ -1,13 +1,13 @@
 import "styles/Card.css";
 
-function Card({ image, handleClick }) {
+function Card({ name, image, handleClick }) {
   return (
     <>
       <div className="card" onClick={() => handleClick(image)}>
         <div className="image">
-          <h1>{image}</h1>
+          <img src={image} alt={name} />
         </div>
-        <div className="name">Card Name</div>
+        <div className="name">{name}</div>
       </div>
     </>
   );

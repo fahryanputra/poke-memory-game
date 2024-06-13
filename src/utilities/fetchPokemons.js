@@ -1,15 +1,20 @@
 import getRandomInteger from "utilities/getRandomInteger";
 
 async function getPokemon(id) {
-  const res = await fetch(`https://pokeapi.co/api/v2/pokemon/${id}`);
-  const { name, sprites } = await res.json();
-  const image = sprites["front_default"];
+  const response = await fetch(`https://pokeapi.co/api/v2/pokemon/${id}`, {
+    mode: "cors",
+  });
+
+  const data = await response.json();
+  const name = data.name;
+  const sprites = data.sprites;
+  const image = sprites.other.dream_world.front_default;
 
   return { id, name, image };
 }
 
 async function fetchPokemons(amount) {
-  const POKEMON_POOL = 721;
+  const POKEMON_POOL = 649;
   const displayPokemon = [];
   const visitedId = [];
 
