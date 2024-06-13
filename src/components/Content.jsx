@@ -84,6 +84,7 @@ function Content() {
 
   function handleCloseGameOverModal() {
     setOpenModal(false);
+    fetchPokemons(pokemonNumber).then((data) => setPokemonData(data));
     setDisplayedPokemon(chooseRandomPokemon(cardNumber, pokemonData));
     setGameOver(false);
   }
@@ -100,10 +101,10 @@ function Content() {
             {displayedPokemon.map((data) => (
               <Card
                 key={uuidv4()}
+                id={data.id ?? ""}
                 name={data.name ?? ""}
                 image={data.image ?? ""}
                 handleClick={handlePlayRound}
-                // isLoading={isLoading}
               />
             ))}
           </div>
