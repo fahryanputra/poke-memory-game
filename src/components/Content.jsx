@@ -8,56 +8,51 @@ import Modal from "components/Modal";
 import getRandomInteger from "utilities/getRandomInteger";
 import fetchPokemons from "utilities/fetchPokemons";
 
-// function createPokemonArray(pokemonNumber) {
-//   const result = [];
+function chooseRandomPokemon(setIsLoading, DECK_SIZE, pokemon) {
+  if (pokemon.length < 1) {
+    return setIsLoading(true);
+  }
 
-//   for (let i = 0; i < pokemonNumber; i++) {
-//     result.push(i);
-//   }
-
-//   return result;
-// }
-
-function chooseRandomPokemon(cardNumber, pokemon) {
   const result = [];
   const previousValue = [];
 
-  for (let i = 0; i < cardNumber; i++) {
+  for (let i = 0; i < DECK_SIZE; i++) {
     let randomValue = 0;
 
-    if (pokemon.length < 1) {
-      result.push("fetching data");
-    } else {
-      do {
-        randomValue = getRandomInteger(pokemon.length);
-      } while (previousValue.includes(randomValue));
-      result.push(pokemon[randomValue]);
-      previousValue.push(randomValue);
-    }
+    do {
+      randomValue = getRandomInteger(pokemon.length);
+    } while (previousValue.includes(randomValue));
+
+    result.push(pokemon[randomValue]);
+    previousValue.push(randomValue);
   }
+
+  setIsLoading(false);
 
   return result;
 }
 
 function Content() {
-  const pokemonNumber = 20;
-  const cardNumber = 12;
+  const POKEMON_SIZE = 20;
+  const DECK_SIZE = 12;
 
   const [pokemonData, setPokemonData] = useState([]);
-  const [displayedPokemon, setDisplayedPokemon] = useState([]);
-
-  useEffect(() => {
-    fetchPokemons(pokemonNumber).then((data) => setPokemonData(data));
-  }, []);
-  useEffect(() => {
-    setDisplayedPokemon(chooseRandomPokemon(cardNumber, pokemonData));
-  }, [pokemonData]);
-
+  const [displayedPokemons, setDisplayedPokemons] = useState([]);
+  const [isLoading, setIsLoading] = useState(true);
   const [chosenPokemon, setChosenPokemon] = useState([]);
   const [score, setScore] = useState(0);
   const [highScore, setHighScore] = useState(0);
   const [gameOver, setGameOver] = useState(false);
   const [openModal, setOpenModal] = useState(false);
+
+  useEffect(() => {
+    fetchPokemons(POKEMON_SIZE).then((data) => setPokemonData(data));
+  }, []);
+  useEffect(() => {
+    setDisplayedPokemons(
+      chooseRandomPokemon(setIsLoading, DECK_SIZE, pokemonData)
+    );
+  }, [pokemonData]);
 
   function handlePlayRound(index) {
     if (chosenPokemon.includes(index)) {
@@ -71,7 +66,9 @@ function Content() {
     }
     setScore(score + 1);
     setChosenPokemon([...chosenPokemon, index]);
-    setDisplayedPokemon(chooseRandomPokemon(cardNumber, pokemonData));
+    setDisplayedPokemons(
+      chooseRandomPokemon(setIsLoading, DECK_SIZE, pokemonData)
+    );
   }
 
   function handleOpenModal() {
@@ -84,8 +81,10 @@ function Content() {
 
   function handleCloseGameOverModal() {
     setOpenModal(false);
-    fetchPokemons(pokemonNumber).then((data) => setPokemonData(data));
-    setDisplayedPokemon(chooseRandomPokemon(cardNumber, pokemonData));
+    fetchPokemons(POKEMON_SIZE).then((data) => setPokemonData(data));
+    setDisplayedPokemons(
+      chooseRandomPokemon(setIsLoading, DECK_SIZE, pokemonData)
+    );
     setGameOver(false);
   }
 
@@ -97,17 +96,23 @@ function Content() {
           <Scoreboard score={score} highScore={highScore} />
         </div>
         <div className="game-board">
-          <div className="cards">
-            {displayedPokemon.map((data) => (
-              <Card
-                key={uuidv4()}
-                id={data.id ?? ""}
-                name={data.name ?? ""}
-                image={data.image ?? ""}
-                handleClick={handlePlayRound}
-              />
-            ))}
-          </div>
+          {isLoading === true ? (
+            <div className="loading-text">
+              <h1>Loading...</h1>
+            </div>
+          ) : (
+            <div className="cards">
+              {displayedPokemons.map((data) => (
+                <Card
+                  key={uuidv4()}
+                  id={data.getId()}
+                  name={data.getName()}
+                  image={data.getImage()}
+                  handleClick={handlePlayRound}
+                />
+              ))}
+            </div>
+          )}
         </div>
         <Modal
           visible={openModal}

@@ -7,10 +7,13 @@ async function getPokemon(id) {
 
   const data = await response.json();
   const name = data.name;
-  const sprites = data.sprites;
-  const image = sprites.other.dream_world.front_default;
+  const image = data.sprites.other.dream_world.front_default;
 
-  return { id, name, image };
+  const getId = () => id;
+  const getName = () => name;
+  const getImage = () => image;
+
+  return { getId, getName, getImage };
 }
 
 async function fetchPokemons(amount) {

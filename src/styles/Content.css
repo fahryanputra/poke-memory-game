@@ -23,6 +23,14 @@
   gap: 1rem;
 }
 
+.loading-text {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  height: 80vh;
+}
+
 @media (min-width: 1025px) {
   .cards {
     grid-template-columns: repeat(4, 1fr);
