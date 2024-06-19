@@ -1,11 +1,10 @@
 .content {
   height: 100%;
   width: 100vw;
-  background-color: lightgreen;
 }
 
 .game-info {
-  padding: 1rem 2rem;
+  padding: 1rem 1.5rem;
   display: flex;
 }
 
@@ -31,10 +30,42 @@
   height: 80vh;
 }
 
-@media (min-width: 1025px) {
+button {
+  background: #ce2211;
+  color: #f0f0f0;
+  border-bottom: 6px inset rgba(0, 0, 0, 0.5);
+  border-left: 6px inset rgba(0, 0, 0, 0.5);
+  border-right: 6px inset rgba(255, 255, 255, 0.5);
+  border-top: 6px inset rgba(255, 255, 255, 0.5);
+  box-sizing: border-box;
+  color: white;
+  cursor: pointer;
+  display: inline-block;
+  font-size: 2.2rem;
+  min-width: 100px;
+  padding: 0.5rem;
+  text-transform: uppercase;
+  width: auto;
+}
+
+button:focus,
+button:hover {
+  background: #bcbcbc;
+}
+
+@media (min-width: 1024px) {
   .cards {
     grid-template-columns: repeat(4, 1fr);
     grid-template-rows: repeat(3, 1fr);
+  }
+
+  button {
+    font-size: 2.2rem;
+    margin: 1rem;
+    min-width: 200px;
+    padding: 0.5rem;
+    text-transform: uppercase;
+    width: auto;
   }
 }
 
@@ -42,5 +73,14 @@
   .cards {
     grid-template-columns: repeat(2, 1fr);
     grid-template-rows: repeat(6, 1fr);
+  }
+
+  button {
+    font-size: 2.2rem;
+    margin: 1rem;
+    min-width: 200px;
+    padding: 0.5rem;
+    text-transform: uppercase;
+    width: auto;
   }
 }

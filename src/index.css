@@ -8,4 +8,26 @@ body {
 }
 body {
   position: relative;
+  word-spacing: 1px;
+  font-family: "Press Start 2P", system-ui;
+  font-size: 7px;
+  font-weight: 400;
+  font-style: normal;
+  background: linear-gradient(rgba(0, 0, 0, 0.2), rgba(0, 0, 0, 0.2)),
+    url("./assets/background.png");
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: cover;
+}
+
+@media (min-width: 1024px) {
+  body {
+    font-size: 14px;
+  }
+}
+
+@media (max-width: 280px) {
+  body {
+    font-size: 6px;
+  }
 }

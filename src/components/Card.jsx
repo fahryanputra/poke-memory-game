@@ -1,14 +1,18 @@
 import "styles/Card.css";
 import capitalizeWord from "utilities/capitalizeWord";
 
-function Card({ id, name, image, handleClick }) {
+function Card({ pokemonId, pokemonName, pokemonImage, handleClick }) {
+  const capitalizedName = capitalizeWord(pokemonName);
+
   return (
     <>
-      <div className="card" onClick={() => handleClick(id)}>
+      <div className="card" onClick={() => handleClick(pokemonId)}>
         <div className="image">
-          <img src={image} alt={capitalizeWord(name)} />
+          <img src={pokemonImage} alt={capitalizedName} />
         </div>
-        <div className="name">{capitalizeWord(name)}</div>
+        <div className="name">
+          <p>{capitalizedName}</p>
+        </div>
       </div>
     </>
   );

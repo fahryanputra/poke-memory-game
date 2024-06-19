@@ -8,54 +8,45 @@ import Modal from "components/Modal";
 import getRandomInteger from "utilities/getRandomInteger";
 import fetchPokemons from "utilities/fetchPokemons";
 
-function chooseRandomPokemon(setIsLoading, DECK_SIZE, pokemon) {
-  if (pokemon.length < 1) {
-    return setIsLoading(true);
-  }
-
-  const result = [];
-  const previousValue = [];
-
-  for (let i = 0; i < DECK_SIZE; i++) {
-    let randomValue = 0;
-
-    do {
-      randomValue = getRandomInteger(pokemon.length);
-    } while (previousValue.includes(randomValue));
-
-    result.push(pokemon[randomValue]);
-    previousValue.push(randomValue);
-  }
-
-  setIsLoading(false);
-
-  return result;
-}
-
 function Content() {
   const POKEMON_SIZE = 20;
   const DECK_SIZE = 12;
 
   const [pokemonData, setPokemonData] = useState([]);
   const [displayedPokemons, setDisplayedPokemons] = useState([]);
-  const [isLoading, setIsLoading] = useState(true);
   const [chosenPokemon, setChosenPokemon] = useState([]);
   const [score, setScore] = useState(0);
   const [highScore, setHighScore] = useState(0);
+  const [isLoading, setIsLoading] = useState(true);
   const [gameOver, setGameOver] = useState(false);
   const [openModal, setOpenModal] = useState(false);
 
-  useEffect(() => {
-    fetchPokemons(POKEMON_SIZE).then((data) => setPokemonData(data));
-  }, []);
-  useEffect(() => {
-    setDisplayedPokemons(
-      chooseRandomPokemon(setIsLoading, DECK_SIZE, pokemonData)
-    );
-  }, [pokemonData]);
+  function chooseRandomPokemon(setIsLoading, DECK_SIZE, pokemonData) {
+    if (pokemonData.length < 1) {
+      return setIsLoading(true);
+    }
 
-  function handlePlayRound(index) {
-    if (chosenPokemon.includes(index)) {
+    const result = [];
+    const previousValue = [];
+
+    for (let i = 0; i < DECK_SIZE; i++) {
+      let randomValue = 0;
+
+      do {
+        randomValue = getRandomInteger(pokemonData.length);
+      } while (previousValue.includes(randomValue));
+
+      result.push(pokemonData[randomValue]);
+      previousValue.push(randomValue);
+    }
+
+    setIsLoading(false);
+
+    return result;
+  }
+
+  function handlePlayRound(pokemonId) {
+    if (chosenPokemon.includes(pokemonId)) {
       if (score > highScore) {
         setHighScore(score);
       }
@@ -65,18 +56,19 @@ function Content() {
       return;
     }
     setScore(score + 1);
-    setChosenPokemon([...chosenPokemon, index]);
+    setChosenPokemon([...chosenPokemon, pokemonId]);
     setDisplayedPokemons(
       chooseRandomPokemon(setIsLoading, DECK_SIZE, pokemonData)
     );
+    return;
   }
 
   function handleOpenModal() {
-    setOpenModal(true);
+    return setOpenModal(true);
   }
 
   function handleCloseTutorialModal() {
-    setOpenModal(false);
+    return setOpenModal(false);
   }
 
   function handleCloseGameOverModal() {
@@ -86,7 +78,18 @@ function Content() {
       chooseRandomPokemon(setIsLoading, DECK_SIZE, pokemonData)
     );
     setGameOver(false);
+    return;
   }
+
+  useEffect(() => {
+    fetchPokemons(POKEMON_SIZE).then((data) => setPokemonData(data));
+  }, []);
+
+  useEffect(() => {
+    setDisplayedPokemons(
+      chooseRandomPokemon(setIsLoading, DECK_SIZE, pokemonData)
+    );
+  }, [pokemonData]);
 
   return (
     <>
@@ -105,9 +108,9 @@ function Content() {
               {displayedPokemons.map((data) => (
                 <Card
                   key={uuidv4()}
-                  id={data.getId()}
-                  name={data.getName()}
-                  image={data.getImage()}
+                  pokemonId={data.getId()}
+                  pokemonName={data.getName()}
+                  pokemonImage={data.getImage()}
                   handleClick={handlePlayRound}
                 />
               ))}
@@ -123,6 +126,8 @@ function Content() {
           visible={gameOver}
           onClose={handleCloseGameOverModal}
           type="gameOver"
+          score={score}
+          highScore={highScore}
         />
       </div>
     </>

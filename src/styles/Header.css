@@ -1,14 +1,32 @@
 header {
+  display: flex;
+  justify-content: center;
+  align-items: center;
   padding: 0 1rem;
-  font-family: "Pokemon Hollow", sans-serif;
+  font-size: 22px;
+  background-color: rgba(0, 0, 0, 0.5);
+}
+
+header h1 {
+  margin: 1rem 0;
+  font-family: "Pokemon Solid", sans-serif;
   font-weight: 400;
-  letter-spacing: 3px;
   font-style: normal;
-  background-color: lightblue;
+  letter-spacing: 5px;
+  -webkit-text-fill-color: #ffcb05;
+  -webkit-text-stroke: 2px #2a75bb;
+}
+
+@media (min-width: 768px) {
+  header {
+    display: block;
+    font-size: 22px;
+  }
 }
 
 @media (max-width: 280px) {
   header {
+    font-size: 14px;
     display: flex;
     justify-content: center;
     align-items: center;
