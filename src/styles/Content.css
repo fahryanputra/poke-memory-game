@@ -6,6 +6,8 @@
 .game-info {
   padding: 1rem 1.5rem;
   display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
 .game-board {
@@ -55,6 +57,13 @@ button:hover {
 
 @media (min-width: 1024px) {
   .cards {
+    grid-template-columns: repeat(6, 1fr);
+    grid-template-rows: repeat(2, 1fr);
+  }
+}
+
+@media (min-width: 768px) and (max-width: 1024px) {
+  .cards {
     grid-template-columns: repeat(4, 1fr);
     grid-template-rows: repeat(3, 1fr);
   }
@@ -78,7 +87,7 @@ button:hover {
   button {
     font-size: 2.2rem;
     margin: 1rem;
-    min-width: 200px;
+    min-width: 100px;
     padding: 0.5rem;
     text-transform: uppercase;
     width: auto;

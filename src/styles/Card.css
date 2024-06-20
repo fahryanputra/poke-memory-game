@@ -1,9 +1,18 @@
 .card {
-  width: 25vw;
-  height: 20vh;
+  width: min-content;
+  aspect-ratio: 9/16;
   display: flex;
   flex-direction: column;
   overflow-anchor: none;
+}
+
+.card:hover {
+  transform: scale(1.03);
+  cursor: pointer;
+}
+
+.card:active {
+  transform: scale(0.92);
 }
 
 img {
@@ -23,6 +32,7 @@ img {
 }
 
 .name {
+  padding: 0 1rem;
   margin-bottom: auto;
   display: flex;
   justify-content: center;
@@ -38,25 +48,28 @@ img {
 
 @media (min-width: 1024px) {
   .card {
-    width: 15vw;
-    height: 30vh;
+    width: calc(100vw / 7);
+    aspect-ratio: 9/16;
   }
 }
 
-@media (min-width: 700px) and (max-width: 1000px) {
+@media (min-width: 768px) and (max-width: 1024px) {
   .card {
-    height: 25vh;
+    width: calc(100vw / 5);
+    aspect-ratio: 9/16;
   }
 }
 
 @media (max-width: 375px) {
   .card {
-    height: 20vh;
+    width: calc(100vw / 4);
+    aspect-ratio: 9/16;
   }
 }
 
 @media (max-width: 280px) {
   .card {
-    width: 35vw;
+    width: calc(100vw / 3);
+    aspect-ratio: 9/16;
   }
 }
