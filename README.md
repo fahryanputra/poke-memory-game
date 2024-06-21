@@ -1,8 +1,22 @@
-# React + Vite
+# PokeMemory Game
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+In PokeMemory game the player are tasked to select one unique Pokemon each round. The game ends when the player selects the same Pokemon twice.
 
-Currently, two official plugins are available:
+## Demo
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react/README.md) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+[Link to live demo](https://pokememory-theta.vercel.app/)
+![Demo Image](./src/assets/demo_image_1.png)
+
+## Built With
+
+- React
+
+## Authors
+
+- Github: [@fahryanputra](https://www.github.com/fahryanputra)
+- Email: [fahryandi.herlasmara@gmail.com](fahryandi.herlasmara@gmail.com)
+
+## Acknowledgements
+
+- [Google Font](https://fonts.google.com/)
+- [PokéAPI](https://pokeapi.co/)
